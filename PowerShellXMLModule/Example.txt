@@ -1,0 +1,5 @@
+import-module ..\PowerShellXMLModule\PowerShellXMLModule\bin\Debug\PowerShellXMLModule.dll
+$r0 = Get-ChildItem .\ 
+$r1 =  Add-Attribute -IOFiles $r0 -Command "XPATH" -AttributeName "FO_NUMBER" -XPATH "//FO_NUMBER"
+$r2 =  Add-Attribute -AFiles $r1 -Command "XPATH" -AttributeName "STOP_ID","TIME" -XPATH "//STOP_ID", "//TIME"
+$r2 | Group-Object {$_.Get("FO_NUMBER")} | Where {$_.Count -gt 4} | Select-Object @{l="FO_NUMBER"; e= {$_.Group[0].Get("FO_NUMBER")}}
